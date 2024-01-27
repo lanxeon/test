@@ -1,0 +1,10 @@
+.text-highlights {
+  color: var(--text-secondary);
+  font-size: var(--title-font-size);
+  font-weight: 400;
+}
+
+.search-list--container__item__text {
+  font-size: var(--title-font-size);
+  font-weight: 500;
+}

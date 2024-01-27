@@ -1,0 +1,21 @@
+.search-list--container__item {
+  display: flex;
+  column-gap: 2.4rem;
+  padding: var(--padding-horizontal);
+}
+
+.search-list--container__item:hover {
+  background: var(--box-shadow);
+}
+
+.search-list--container__item__sub-heading {
+  font-size: var(--subheading-font-size);
+  font-weight: 300;
+  color: #888;
+  padding-top: 1.2rem;
+}
+
+.text-highlights-small {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
