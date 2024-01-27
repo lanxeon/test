@@ -31,6 +31,7 @@ enum KEYS {
 const SearchContainer = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [active, setActive] = useState(0);
+  const inputRef = useRef<HTMLInputElement>(null);
   const selectRef = useRef<SelectRef>(null);
   const debouncedQuery = useDebounce<string>(searchQuery, 300); // delayes capturing query by N ms
   const { recipies, loading, error, setRecipies } =
@@ -48,7 +49,10 @@ const SearchContainer = () => {
       case KEYS.Enter:
         // Handle Enter key
         setActive(0);
-        if (recipies[active].name) setSearchQuery(recipies[active].name);
+        if (recipies[active].name) {
+          // setSearchQuery(recipies[active].name);
+          inputRef.current!.value = recipies[active].name;
+        }
         break;
       case KEYS.ArrowUp:
         // Handle Arrow Up
@@ -95,6 +99,7 @@ const SearchContainer = () => {
         autoComplete="off"
         pattern={"^[ _]*[A-Z0-9][A-Z0-9 _]*$"} //to avoid unwanted characters
         handleChange={handleSearchChange}
+        ref={inputRef}
       />
       {!error ? (
         <SearchList
