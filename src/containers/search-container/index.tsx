@@ -33,7 +33,7 @@ const SearchContainer = () => {
   const [active, setActive] = useState(0);
   const selectRef = useRef<SelectRef>(null);
   const debouncedQuery = useDebounce<string>(searchQuery, 300); // delayes capturing query by N ms
-  const [recipies, loading, error, setRecipies] =
+  const { recipies, loading, error, setRecipies } =
     useFetchRecipies(debouncedQuery); // fetches query
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {

@@ -1,11 +1,12 @@
 import { Recipe } from "@/interfaces";
 import { getRecipies } from "@/services";
+import { useMemo } from "react";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 function useFetchRecipies(
-  query: string
+  query: string,
 ): [Recipe[], boolean, string, Dispatch<SetStateAction<Recipe[]>>] {
-  const [recipies, setRecepies] = useState<Recipe[]>([]);
+  const [recipies, setRecipies] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -21,10 +22,10 @@ function useFetchRecipies(
         .then((res) => {
           if (res.recipes?.length) {
             setError("");
-            setRecepies(res.recipes);
+            setRecipies(res.recipes);
             setLoading(false);
           } else {
-            setRecepies([]);
+            setRecipies([]);
             setError("No recipies found");
             setLoading(false);
           }
@@ -34,7 +35,7 @@ function useFetchRecipies(
           if (error) setError(error.message);
         });
     } else {
-      setRecepies([]);
+      setRecipies([]);
       setError("");
       setLoading(false);
     }
@@ -44,7 +45,15 @@ function useFetchRecipies(
     };
   }, [query]);
 
-  return [recipies, loading, error, setRecepies];
+  return useMemo(
+    () => ({
+      recipies,
+      loading,
+      error,
+      setRecipies,
+    }),
+    [recipies, loading, error, setRecipies],
+  );
 }
 
 export default useFetchRecipies;
