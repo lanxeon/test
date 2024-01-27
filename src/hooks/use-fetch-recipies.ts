@@ -1,11 +1,8 @@
 import { Recipe } from "@/interfaces";
 import { getRecipies } from "@/services";
-import { useMemo } from "react";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-function useFetchRecipies(
-  query: string,
-): [Recipe[], boolean, string, Dispatch<SetStateAction<Recipe[]>>] {
+function useFetchRecipies(query: string) {
   const [recipies, setRecipies] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
