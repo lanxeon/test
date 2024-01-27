@@ -23,9 +23,9 @@ import {
 import useFetchRecipies from "@/hooks/use-fetch-recipies";
 
 enum KEYS {
-  ArrowUp = 40,
-  ArrowDown = 38,
-  Enter = 13,
+  ArrowUp = "ArrowUp",
+  ArrowDown = "ArrowDown",
+  Enter = "Enter",
 }
 
 const SearchContainer = () => {
@@ -33,24 +33,22 @@ const SearchContainer = () => {
   const [active, setActive] = useState(0);
   const selectRef = useRef<SelectRef>(null);
   const debouncedQuery = useDebounce<string>(searchQuery, 300); // delayes capturing query by N ms
-  const [recipies, loading, error, setRecipies] =
+  const { recipies, loading, error, setRecipies } =
     useFetchRecipies(debouncedQuery); // fetches query
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.validity.valid) {
-      // check for valid string [a-z] [0-9]
-      setSearchQuery(e.target.value);
-    }
+    console.log(e.target.validity.valid);
+    // check for valid string [a-z] [0-9]
+    setSearchQuery(e.target.value);
   };
 
   // helper function for list item navigation
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    switch (e.keyCode) {
+    switch (e.key) {
       case KEYS.Enter:
         // Handle Enter key
         setActive(0);
-        // setRecipies([]);
-        // if (recipies[active].name) setSearchQuery(recipies[active].name);
+        if (recipies[active].name) setSearchQuery(recipies[active].name);
         break;
       case KEYS.ArrowUp:
         // Handle Arrow Up
@@ -95,7 +93,7 @@ const SearchContainer = () => {
         searchQuery={searchQuery}
         onKeyDown={onKeyDown}
         autoComplete="off"
-        pattern={"[a-zA-Z0-9]+"} //to avoid unwanted characters
+        pattern={"^[ _]*[A-Z0-9][A-Z0-9 _]*$"} //to avoid unwanted characters
         handleChange={handleSearchChange}
       />
       {!error ? (
